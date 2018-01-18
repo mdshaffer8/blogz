@@ -49,7 +49,7 @@ def addpost():
     db.session.add(post)
     db.session.commit()
 
-    return redirect('/')
+    return redirect(url_for('post', post_id=post.id))
 
 
 if __name__ == '__main__':
