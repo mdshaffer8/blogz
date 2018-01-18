@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+    <head>
+        
+        <link href="https://fonts.googleapis.com/css?family=Abel|Open+Sans|Quicksand" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/static/styles.css">
+
+        <title>{{title}}</title>
+    </head>
+<body>
+<nav>
+    <ul>
+    <li><a href ="{{ url_for('index') }}">Main Blog Page</a></li>
+    <li><a href ="{{ url_for('newpost') }}">Add a Blog Entry</a></li>
+    </ul>
+</nav>
+
+    {% block content %}
+    {% endblock %}
+
+</body>
+</html>
