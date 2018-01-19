@@ -5,14 +5,15 @@
 <h1>Add a Blog Entry</h1>
 
 <div class="container">
-<form name="addForm" id="addForm" method="POST" action="/addpost" novalidate>
+<form name="addForm" id="addForm" method="POST" action="/addpost">
 
     <div class="row">
         <div class="col-25">
         <label>Title for your new blog:</label>
         </div>
             <div class="col-75">
-            <input type="text" name="title" id="title" required data-validation-required-message="Please enter a title."/>
+            <input type="text" name="title" id="title" required/>
+            <span class="error">{{title_error}}</span>
             </div>       
     </div>
 
@@ -21,7 +22,8 @@
         <label>Your new blog:</label>
         </div>
             <div class="col-75">
-            <textarea name="content" id="content"></textarea>
+            <textarea name="content" id="content" required></textarea>
+            <span class="error">{{content_error}}</span>
             </div>   
     </div>
 
