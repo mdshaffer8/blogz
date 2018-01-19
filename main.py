@@ -15,9 +15,9 @@ class Blogpost(db.Model):
     title = db.Column(db.String(120))
     content = db.Column(db.Text)
 
-    # def __init__(self, title, content):
-    #     self.title = title
-    #     self.content = content
+    def __init__(self, title, content):
+        self.title = title
+        self.content = content
 
 
 @app.route('/')

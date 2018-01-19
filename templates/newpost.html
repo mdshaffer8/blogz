@@ -4,15 +4,30 @@
 
 <h1>Add a Blog Entry</h1>
 
+<div class="container">
 <form name="addForm" id="addForm" method="POST" action="/addpost" novalidate>
-        <label>Title for your new blog:
+
+    <div class="row">
+        <div class="col-25">
+        <label>Title for your new blog:</label>
+        </div>
+            <div class="col-75">
             <input type="text" name="title" id="title" required data-validation-required-message="Please enter a title."/>
-        </label>
-        <label>Your new blog:
-            <input type="text" name="content" id="content" required data-validation-required-message="Please enter a message."/>
-        </label>
-        <!-- <input type="submit" value='Add Entry' /> -->
-        <button type="submit" id="sendMessageButton">Send</button>
+            </div>       
+    </div>
+
+    <div class="row">
+        <div class="col-25">
+        <label>Your new blog:</label>
+        </div>
+            <div class="col-75">
+            <textarea name="content" id="content"></textarea>
+            </div>   
+    </div>
+
+    <div class="row">
+        <input type="submit" value="Submit Post">
+    </div>
 </form>
 
 {% endblock %}

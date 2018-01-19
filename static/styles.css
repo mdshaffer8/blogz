@@ -4,6 +4,7 @@ body {
 
 h1 {
     font-size: 3em;
+    text-align: center;
 }
 
 h2 {
@@ -12,10 +13,6 @@ h2 {
 
 p {
     font-size: 1.2em;
-}
-
-.header {
-    text-align: center;
 }
 
 a {
@@ -53,4 +50,83 @@ li a {
 /* Change the link color to #111 (black) on hover */
 li a:hover {
     background-color: #111;
+}
+
+/* form styling */
+
+* {
+    box-sizing: border-box;
+}
+
+input[type=text], select, textarea{
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    resize: vertical;
+    font-size: 1.2em;
+    font-family: 'Quicksand', sans-serif;
+}
+
+textarea {
+    height: 200px;
+    font-size: 1.2em;
+}
+
+label {
+    padding: 12px 12px 12px 0;
+    display: inline-block;
+    font-size: 1.2em;
+}
+
+input[type=submit] {
+    background-color:teal;;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    float: right;
+    margin-top: 50px;
+    font-size: 1.2em;
+    font-family: 'Quicksand', sans-serif;
+}
+
+input[type=submit]:hover {
+    background-color:lightseagreen;
+}
+
+.container {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+    margin: 80px;
+}
+
+.col-25 {
+    float: left;
+    width: 25%;
+    margin-top: 6px;
+}
+
+.col-75 {
+    float: left;
+    width: 75%;
+    margin-top: 6px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+@media (max-width: 600px) {
+    .col-25, .col-75, input[type=submit] {
+        width: 100%;
+        margin-top: 0;
+    }
 }
