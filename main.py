@@ -44,47 +44,47 @@ def is_blank(x):
         return True
 
 
-@app.route('/addpost', methods=['POST'])
-
-def user_errors():
-
-    title = request.form['title']
-    content = request.form['content']
-
-    title_error = ''
-    content_error = ''
-
-    if is_blank(title):
-        title_error = "Field cannot be blank"
-
-    if is_blank(content):
-        content_error = "Field cannot be blank"
-
-    if not title_error and not content_error:
-        post = Blogpost(title=title, content=content)
-
-        db.session.add(post)
-        db.session.commit()
-
-        return redirect(url_for('post', post_id=post.id))
-    else:
-        data = {'title':title, 'content':content}
-        return render_template('newpost.html', data = data, title_error=title_error, content_error=content_error)
-
-
-
 # @app.route('/addpost', methods=['POST'])
-# def addpost():
+
+# def user_errors():
 
 #     title = request.form['title']
 #     content = request.form['content']
 
-#     post = Blogpost(title=title, content=content)
+#     title_error = ''
+#     content_error = ''
 
-#     db.session.add(post)
-#     db.session.commit()
+#     if is_blank(title):
+#         title_error = "Field cannot be blank"
 
-#     return redirect(url_for('post', post_id=post.id))
+#     if is_blank(content):
+#         content_error = "Field cannot be blank"
+
+#     if not title_error and not content_error:
+#         post = Blogpost(title=title, content=content)
+
+#         db.session.add(post)
+#         db.session.commit()
+
+#         return redirect(url_for('post', post_id=post.id))
+#     else:
+#         data = {'title':title, 'content':content}
+#         return render_template('newpost.html', data = data, title_error=title_error, content_error=content_error)
+
+
+
+@app.route('/addpost', methods=['POST'])
+def addpost():
+
+    title = request.form['title']
+    content = request.form['content']
+
+    post = Blogpost(title=title, content=content)
+
+    db.session.add(post)
+    db.session.commit()
+
+    return redirect(url_for('post', post_id=post.id))
 
 
 
