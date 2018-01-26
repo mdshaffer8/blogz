@@ -6,6 +6,14 @@ from hashutils import make_password_hash, check_password_hash
 app.secret_key = 'c2_8xit&vcwu@skn4ff'
 
 
+
+@app.before_request
+def require_login():
+    allowed_routes = ['login', 'allposts', 'index', 'signup']
+    if request.endpoint not in allowed_routes and 'username' not in session and '/static/' not in request.path:
+        return redirect('/login')
+
+
 @app.route('/')
 def index():
     users = User.query.all()
@@ -14,8 +22,21 @@ def index():
 
 @app.route('/allposts')
 def allposts():
-    posts = Blogpost.query.order_by(Blogpost.timestamp.desc()).all()
-    return render_template('allposts.html', posts=posts)
+
+    if not request.args:
+        posts = Blogpost.query.order_by(Blogpost.timestamp.desc()).all()
+        return render_template('allposts.html', posts=posts)
+
+    elif request.args.get('id'):
+        user_id = request.args.get('id')
+        post = Blogpost.query.filter_by(id=user_id).first()
+        return render_template('post.html', post=post)
+    
+    elif request.args.get('user'):
+        user_id = request.args.get('user')
+        user = User.query.filter_by(id=user_id).first()
+        posts = Blogpost.query.filter_by(owner_id=user_id).all()
+        return render_template('user.html', posts=posts, user=user)
 
 
 @app.route('/newpost', methods=['POST', 'GET'])
