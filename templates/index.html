@@ -5,14 +5,14 @@
             <h1>Blog Users</h1>
 
             {% if users|length == 0 %}
-                <p>No users yet</p>
+                <h3>No users yet</h3>
             {% else %}
-            <div class="container">
+            <div class="section">
                 
                     {% for user in users %}
-                        <p>
+                        <h2>
                           <a href="{{ url_for('allposts', user=user.id )}}">{{ user.username }}</a>
-                        </p>
+                        </h2>
                     {% endfor %}
                 
             {% endif %}

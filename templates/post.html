@@ -1,10 +1,11 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-<h1>{{ post.title }}</h1>
+<div class="section">
+<h1>Blog Title: {{ post.title }}</h1>
 <div class="container">
 <p>{{ post.content|safe }}</p>
+</div>
 <small>Author: <a href="{{ url_for('allposts', user=post.owner.id )}}" class="author">{{ post.owner.username }}</a>
     | Posted on: {{ post.timestamp }}</small>
 </div>

@@ -54,7 +54,7 @@ def newpost():
         db.session.commit()
 
         return redirect(url_for('allposts', id=post.id))
-
+    
     return render_template('newpost.html')
 
 

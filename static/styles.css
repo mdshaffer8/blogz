@@ -8,7 +8,13 @@ h1 {
 }
 
 h2 {
+    font-size: 2.5em;
+}
+
+h3 {
     font-size: 2em;
+    color: teal;
+    text-align: center;
 }
 
 p {
@@ -25,6 +31,7 @@ a:hover {
 
 hr {
     color:lightslategrey;
+    margin: 50px;
 }
 
 ul {
@@ -103,8 +110,26 @@ input[type=submit]:hover {
 .container {
     border-radius: 5px;
     background-color: #f2f2f2;
+    
+}
+
+.newpost-container {
+    border-radius: 5px;
+    background-color: #f2f2f2;
     padding: 20px;
-    margin: 80px;
+    margin: 40px 160px;
+}
+
+.form-container {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+    margin: 40px 300px;
+}
+
+.section {
+    padding: 20px;
+    margin: 40px 160px;
 }
 
 .col-25 {
