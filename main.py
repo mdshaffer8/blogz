@@ -100,6 +100,8 @@ def signup():
         user_length = len(username)
         pw_length = len(password)
 
+        errors = False
+
         if existing_user:
             flash('User already exists.', 'error')
             return redirect("/signup")
