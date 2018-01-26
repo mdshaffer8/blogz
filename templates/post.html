@@ -5,6 +5,8 @@
 <h1>{{ post.title }}</h1>
 <div class="container">
 <p>{{ post.content|safe }}</p>
+<small>Author: <a href="{{ url_for('allposts', user=post.owner.id )}}" class="author">{{ post.owner.username }}</a>
+    | Posted on: {{ post.timestamp }}</small>
 </div>
 
 {% endblock %}

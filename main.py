@@ -85,7 +85,7 @@ def login():
 def logout():
     del session['username']
     flash("You are now logged out.")
-    return redirect('/login')
+    return redirect('/allposts')
 
 
 @app.route('/signup', methods=['POST', 'GET'])
