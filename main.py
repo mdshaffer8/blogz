@@ -95,17 +95,44 @@ def signup():
 
         username = request.form['username']
         password = request.form['password']
+        verify_password = request.form['verify']
         existing_user = User.query.filter_by(username=username).first()
+        user_length = len(username)
+        pw_length = len(password)
 
-        if not existing_user:
+        if existing_user:
+            flash('User already exists.', 'error')
+            return redirect("/signup")
+
+        if not username:
+            flash('Must enter a Username', 'error')
+            errors = True
+
+        if not password:
+            flash('Must enter a Password', 'error')
+            errors = True
+        
+        if user_length < 3:
+            flash('Username must be at least 3 characters', 'error')
+            errors = True
+        
+        if pw_length < 3:
+            flash('Password must be at least 3 characters', 'error')
+            errors = True
+
+        if verify_password != password:
+            flash('Passwords must match', 'error')
+            errors = True
+            
+        else:
             new_user = User(username,password)
             db.session.add(new_user)
             db.session.commit()
             session['username'] = username
             return redirect('/newpost')
-        else:
-            flash('User already exists.', 'error')
-            return redirect('/signup')
+
+        if errors:
+            return redirect("/signup")
 
     return render_template('signup.html')
 
