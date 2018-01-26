@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+            <h1>{{ user.username }}</h1>
+
+            {% if posts|length == 0 %}
+                <p>No posts yet</p>
+            {% else %}
+
+                <div class="container">
+                    {% for post in posts %}
+                        <li><a href="{{ url_for('allposts', id=post.id) }}">{{ post.title }}</a>
+                            <ul>
+                                <li>{{ post.content }}</li>
+                            </ul>
+                        </li>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+    </main>
+{% endblock %}

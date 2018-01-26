@@ -1,91 +1,92 @@
-from flask import Flask, request, redirect, render_template, url_for
-from flask_sqlalchemy import SQLAlchemy
+from flask import Flask, request, redirect, render_template, url_for, session, flash
+from app import app, db
+from models import Blogpost, User
+from hashutils import make_password_hash, check_password_hash
 
-app = Flask(__name__)
-app.config['DEBUG'] = True
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://build-a-blog:kaibeans@localhost:8889/build-a-blog'
-app.config['SQLALCHEMY_ECHO'] = True
-
-db = SQLAlchemy(app)
-
-
-class Blogpost(db.Model):
-
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(120))
-    content = db.Column(db.Text)
-
-    def __init__(self, title, content):
-        self.title = title
-        self.content = content
+app.secret_key = 'c2_8xit&vcwu@skn4ff'
 
 
 @app.route('/')
 def index():
-    posts = Blogpost.query.all()
-    return render_template('blog.html', posts=posts)
+    users = User.query.all()
+    return render_template('index.html', users=users)
 
 
-@app.route('/post/<int:post_id>')
-def post(post_id):
-    post = Blogpost.query.filter_by(id=post_id).one()
+@app.route('/allposts')
+def allposts():
+    posts = Blogpost.query.order_by(Blogpost.timestamp.desc()).all()
+    return render_template('allposts.html', posts=posts)
 
-    return render_template('post.html', post=post)
 
-
-@app.route('/newpost')
+@app.route('/newpost', methods=['POST', 'GET'])
 def newpost():
+
+    if request.method == 'POST':
+
+        owner = User.query.filter_by(username=session['username']).first()
+        title = request.form['title']
+        content = request.form['content']
+
+        post = Blogpost(title=title, content=content, owner=owner)
+
+        db.session.add(post)
+        db.session.commit()
+
+        return redirect(url_for('allposts', id=post.id))
+
     return render_template('newpost.html')
 
-def is_blank(x):
-    if x:
-        return False
-    else:
-        return True
+
+@app.route('/login', methods=['POST', 'GET'])
+def login():
+
+    if request.method == 'POST':
+        
+        username = request.form['username']
+        password = request.form['password']
+        user = User.query.filter_by(username=username).first()
+
+        if not user:
+            flash("User does not exist.", 'error')
+            return redirect('/login')
+        if not check_password_hash(password, user.password_hash):
+            flash("Password is incorrect. Please try again.", 'error')
+            return redirect('/login')
+        else:
+            session['username'] = username
+            flash("Logged in")
+            return redirect('/newpost')
+        
+    return render_template('login.html')
 
 
-# @app.route('/addpost', methods=['POST'])
-
-# def user_errors():
-
-#     title = request.form['title']
-#     content = request.form['content']
-
-#     title_error = ''
-#     content_error = ''
-
-#     if is_blank(title):
-#         title_error = "Field cannot be blank"
-
-#     if is_blank(content):
-#         content_error = "Field cannot be blank"
-
-#     if not title_error and not content_error:
-#         post = Blogpost(title=title, content=content)
-
-#         db.session.add(post)
-#         db.session.commit()
-
-#         return redirect(url_for('post', post_id=post.id))
-#     else:
-#         data = {'title':title, 'content':content}
-#         return render_template('newpost.html', data = data, title_error=title_error, content_error=content_error)
+@app.route('/logout')
+def logout():
+    del session['username']
+    flash("You are now logged out.")
+    return redirect('/login')
 
 
+@app.route('/signup', methods=['POST', 'GET'])
+def signup():
 
-@app.route('/addpost', methods=['POST'])
-def addpost():
+    if request.method == 'POST':
 
-    title = request.form['title']
-    content = request.form['content']
+        username = request.form['username']
+        password = request.form['password']
+        existing_user = User.query.filter_by(username=username).first()
 
-    post = Blogpost(title=title, content=content)
+        if not existing_user:
+            new_user = User(username,password)
+            db.session.add(new_user)
+            db.session.commit()
+            session['username'] = username
+            return redirect('/newpost')
+        else:
+            flash('User already exists.', 'error')
+            return redirect('/signup')
 
-    db.session.add(post)
-    db.session.commit()
-
-    return redirect(url_for('post', post_id=post.id))
-
+    return render_template('signup.html')
 
 
 

@@ -10,10 +10,22 @@
 <body>
 <nav>
     <ul>
-    <li><a href ="{{ url_for('index') }}">Main Blog Page</a></li>
+    <li><a href ="{{ url_for('index') }}">Home</a></li>
+    <li><a href ="{{ url_for('allposts') }}">All Posts</a></li>
     <li><a href ="{{ url_for('newpost') }}">Add a Blog Entry</a></li>
+    <li><a href ="{{ url_for('login') }}">Login</a></li>
+    <li><a href ="{{ url_for('logout') }}">Logout</a></li>
     </ul>
 </nav>
+
+{% with messages = get_flashed_messages(with_categories=True) %}
+
+<div>
+{% for category,message in messages %}
+    <p class="{{category}}">{{message}}</li>
+{% endfor %}
+</div>
+{% endwith %}
 
     {% block content %}
     {% endblock %}
