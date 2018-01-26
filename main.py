@@ -123,6 +123,9 @@ def signup():
         if verify_password != password:
             flash('Passwords must match', 'error')
             errors = True
+
+        if errors:
+            return redirect("/signup")    
             
         else:
             new_user = User(username,password)
@@ -131,8 +134,7 @@ def signup():
             session['username'] = username
             return redirect('/newpost')
 
-        if errors:
-            return redirect("/signup")
+        
 
     return render_template('signup.html')
 
